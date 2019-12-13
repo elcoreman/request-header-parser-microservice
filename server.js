@@ -24,10 +24,10 @@ app.get("/api/hello", function(req, res) {
 });
 
 app.get("/api/whoami", function(req, res) {
-  const ip = req.ip;
+  const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
   const lang = req.headers["accept-language"];
-  const soft = req.headers["User-Agent"];
-  res.json({ "ipaddress": "ip", language: lang, "software": soft });
+  const soft = req.headers["user-agent"];
+  res.json({ ipaddress: ip, language: lang, software: soft });
 });
 
 // listen for requests :)
